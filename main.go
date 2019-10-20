@@ -7,6 +7,7 @@ import (
 	"github.com/nlopes/slack"
 	"github.com/nlopes/slack/slackevents"
 	"log"
+	"math/rand"
 	"net/http"
 	"net/http/httputil"
 	"os"
@@ -47,8 +48,11 @@ func main() {
 			switch ev := innerEvent.Data.(type) {
 			case *slackevents.MessageEvent:
 				if ev.User == os.Getenv("MERKY_UID"){
-					if api.AddReaction("clown_face", slack.NewRefToMessage(ev.Channel, ev.TimeStamp)) != nil {
-						fmt.Println("Couldn't add reaction")
+					r := rand.New(rand.NewSource(200))
+					if r.Intn(100) > 80 {
+						if api.AddReaction("clown_face", slack.NewRefToMessage(ev.Channel, ev.TimeStamp)) != nil {
+							fmt.Println("Couldn't add reaction")
+						}
 					}
 				}
 			}
