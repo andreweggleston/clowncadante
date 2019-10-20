@@ -177,6 +177,11 @@
       "description": "Set this to the relative path to your project if it is not in the root of your repository"
     },
     {
+      "name": "APPLICATION_DOMAIN",
+      "description": "The exposed hostname that will route to the Beego service",
+      "value": "clowncadante.csh.rit.edu"
+    },
+    {
       "name": "GITHUB_WEBHOOK_SECRET",
       "description": "Github trigger secret.  A difficult to guess string encoded as part of the webhook URL.  Not encrypted.",
       "generate": "expression",
