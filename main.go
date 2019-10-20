@@ -28,7 +28,7 @@ func main() {
 		fmt.Println("Request body: ", body)
 		eventsAPIEvent, e := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionVerifyToken(&slackevents.TokenComparator{VerificationToken: os.Getenv("OAUTH_TOKEN")}))
 		if e != nil {
-			fmt.Print("Error:\n", e.Error())
+			fmt.Println("Error: ", e.Error())
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
