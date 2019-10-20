@@ -26,7 +26,7 @@ func main() {
 		reqDump , _ :=httputil.DumpRequest(r, true)
 		fmt.Println("Request Dump: ", string(reqDump))
 		fmt.Println("Request body: ", body)
-		eventsAPIEvent, e := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionVerifyToken(&slackevents.TokenComparator{VerificationToken: os.Getenv("OAUTH_TOKEN")}))
+		eventsAPIEvent, e := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionVerifyToken(&slackevents.TokenComparator{VerificationToken: os.Getenv("VERIFICATION_TOKEN")}))
 		if e != nil {
 			fmt.Println("Error: ", e.Error())
 			w.WriteHeader(http.StatusInternalServerError)
