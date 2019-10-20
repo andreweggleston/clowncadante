@@ -5,4 +5,4 @@ RUN CGO_ENABLED=0 go build
 
 FROM scratch
 COPY --from=build /go/src/github.com/andreweggleston/clowncadante/clowncadante /clowncadante
-ENTRYPOINT ["/clowncadante"]
+ENTRYPOINT ["/clowncadante", "/bin/sh"]
