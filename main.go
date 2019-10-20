@@ -22,7 +22,7 @@ func main() {
 		buf := new(bytes.Buffer)
 		buf.ReadFrom(r.Body)
 		body := buf.String()
-		eventsAPIEvent, e := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionVerifyToken(&slackevents.TokenComparator{VerificationToken: "TOKEN"}))
+		eventsAPIEvent, e := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionVerifyToken(&slackevents.TokenComparator{VerificationToken: os.Getenv("OAUTH_TOKEN")}))
 		if e != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
@@ -42,11 +42,13 @@ func main() {
 			switch ev := innerEvent.Data.(type) {
 			case *slackevents.MessageEvent:
 				if ev.User == os.Getenv("MERKY_UID"){
-					_ = api.AddReaction("clown_face", slack.NewRefToMessage(ev.Channel, ev.TimeStamp))
+					if api.AddReaction("clown_face", slack.NewRefToMessage(ev.Channel, ev.TimeStamp)) != nil {
+						fmt.Println("Couldn't add reaction")
+					}
 				}
 			}
 		}
 	})
 	fmt.Println("[INFO] Server listening")
-	_ = http.ListenAndServe(":3000", nil)
+	_ = http.ListenAndServe(":8080", nil)
 }
