@@ -8,6 +8,7 @@ import (
 	"github.com/nlopes/slack/slackevents"
 	"log"
 	"net/http"
+	"net/http/httputil"
 	"os"
 )
 
@@ -22,8 +23,12 @@ func main() {
 		buf := new(bytes.Buffer)
 		buf.ReadFrom(r.Body)
 		body := buf.String()
+		reqDump , _ :=httputil.DumpRequest(r, true)
+		fmt.Println(string(reqDump))
+		fmt.Println(body)
 		eventsAPIEvent, e := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionVerifyToken(&slackevents.TokenComparator{VerificationToken: os.Getenv("OAUTH_TOKEN")}))
 		if e != nil {
+			fmt.Print("Error:\n", e)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
