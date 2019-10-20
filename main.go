@@ -9,7 +9,6 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
-	"net/http/httputil"
 	"os"
 )
 
@@ -24,9 +23,6 @@ func main() {
 		buf := new(bytes.Buffer)
 		buf.ReadFrom(r.Body)
 		body := buf.String()
-		reqDump , _ :=httputil.DumpRequest(r, true)
-		fmt.Println("Request Dump: ", string(reqDump))
-		fmt.Println("Request body: ", body)
 		eventsAPIEvent, e := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionVerifyToken(&slackevents.TokenComparator{VerificationToken: os.Getenv("VERIFICATION_TOKEN")}))
 		if e != nil {
 			fmt.Println("Error: ", e.Error())
@@ -50,6 +46,7 @@ func main() {
 				if ev.User == os.Getenv("MERKY_UID"){
 					r := rand.New(rand.NewSource(200))
 					if r.Intn(100) > 80 {
+						fmt.Println("ITS CLOWN TIME!!!!!")
 						if api.AddReaction("clown_face", slack.NewRefToMessage(ev.Channel, ev.TimeStamp)) != nil {
 							fmt.Println("Couldn't add reaction")
 						}
