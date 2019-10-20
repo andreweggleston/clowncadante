@@ -46,13 +46,17 @@ func main() {
 				fmt.Println(ev.Username, ": ", ev.Text)
 				if ev.User == os.Getenv("MERKY_UID"){
 					r := rand.New(rand.NewSource(200))
-					if r.Intn(100) > 80 {
+					num := r.Intn(100)
+					fmt.Println("Rand genned: ", num)
+					if num > 80 {
 						fmt.Println("ITS CLOWN TIME!!!!!")
 						if api.AddReaction("clown_face", slack.NewRefToMessage(ev.Channel, ev.TimeStamp)) != nil {
 							fmt.Println("Couldn't add reaction")
 						}
 					}
 				}
+			case *slackevents.:
+				
 			}
 		}
 	})
