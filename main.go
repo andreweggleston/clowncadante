@@ -24,11 +24,11 @@ func main() {
 		buf.ReadFrom(r.Body)
 		body := buf.String()
 		reqDump , _ :=httputil.DumpRequest(r, true)
-		fmt.Println(string(reqDump))
-		fmt.Println(body)
+		fmt.Println("Request Dump: ", string(reqDump))
+		fmt.Println("Request body: ", body)
 		eventsAPIEvent, e := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionVerifyToken(&slackevents.TokenComparator{VerificationToken: os.Getenv("OAUTH_TOKEN")}))
 		if e != nil {
-			fmt.Print("Error:\n", e)
+			fmt.Print("Error:\n", e.Error())
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
