@@ -43,7 +43,7 @@ func main() {
 			innerEvent := eventsAPIEvent.InnerEvent
 			switch ev := innerEvent.Data.(type) {
 			case *slackevents.MessageEvent:
-				fmt.Println(ev.User, ": ", ev.Text)
+				fmt.Println(ev.Username, ": ", ev.Text)
 				if ev.User == os.Getenv("MERKY_UID"){
 					r := rand.New(rand.NewSource(200))
 					if r.Intn(100) > 80 {
