@@ -45,6 +45,7 @@ func main() {
 			case *slackevents.MessageEvent:
 				fmt.Println(ev.Username, ": ", ev.Text)
 				if ev.User == os.Getenv("MERKY_UID"){
+					fmt.Println("A clown has been detected")
 					r := rand.New(rand.NewSource(200))
 					num := r.Intn(100)
 					fmt.Println("Rand genned: ", num)
@@ -55,8 +56,8 @@ func main() {
 						}
 					}
 				}
-			case *slackevents.:
-				
+			//case *slackevents.:
+			//
 			}
 		}
 	})
