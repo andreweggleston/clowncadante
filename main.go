@@ -10,6 +10,7 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"time"
 )
 
 var api = slack.New(
@@ -46,7 +47,7 @@ func main() {
 				fmt.Println(ev.Username, ": ", ev.Text)
 				if ev.User == os.Getenv("MERKY_UID"){
 					fmt.Println("A clown has been detected")
-					r := rand.New(rand.NewSource(200))
+					r := rand.New(rand.NewSource(time.Now().UnixNano()))
 					num := r.Intn(100)
 					fmt.Println("Rand genned: ", num)
 					if num > 80 {
